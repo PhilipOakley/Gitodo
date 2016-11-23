@@ -1,0 +1,17 @@
+update format-patch so that a commit starting !cover (usually empty) will use that commit message as the cover letter for the series.
+
+The user can manually move it to where they need in the series when rebasing (some want it at the end of their series, others at the start)
+
+by simply using the 0000-*.patch again we get the overwrite we need.
+
+I think it's in log.c#L1348
+
+
+Message-ID: <DD86BC6E2E3245BA991E4D65CE66E4A8@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: "Philip Oakley" <philipoakley@iee.org>
+To: "Duy Nguyen" <pclouds@gmail.com>, "Stefan Beller" <sbeller@google.com>
+Cc: "Jacob Keller" <jacob.keller@gmail.com>, "Git List" <git@vger.kernel.org>
+References: <CA+P7+xpHDGY5RTR8ntrABdxqM6b4V9dndS68=kV1+1Ym1N6YKw@mail.gmail.com> <CAGZ79kba36GprgHA04_q4NmY2=_amoWyafUaLKkcknc3HsT_-g@mail.gmail.com> <CACsJy8C51UkH=tLSfGigAF0JjPxVS3fY0EHi0CNVRG8LY8YiCg@mail.gmail.com> <CA+P7+xo4UJ8W4G0gV=DMLs-9Ve4v0OKc0ZunmS5Y5B1k7L0P9w@mail.gmail.com> <CAGZ79kb27JZepMD5AmrHjOnf8haE8LehZd_CkvOQ1UoLEDuxKQ@mail.gmail.com> <CACsJy8BdmR5USJvjJ6xbjj=bP787tdS72_oL+PDq0D+FPYmiPA@mail.gmail.com>
+Subject: Re: storing cover letter of a patch series?
+Date: Mon, 15 Aug 2016 13:37:33 +0100
