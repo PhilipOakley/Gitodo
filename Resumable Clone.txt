@@ -1,0 +1,24 @@
+Resumable Clone.
+
+1. New bundle standard extension (.bndl). Add to the list in clone.c
+
+2. cannot see how the code determines if it already has the adjacent pack part, or whether if needs to get the pack again.
+
+3. Perhaps there should be a way of recombining the bundle after getting the pack - the "resumable" capabilities is confusing the "bundle sneakernet" capabilities.
+
+4. somewhat orthogonal, but nearby, unconfuse dual HEADs, is right there in the bundle header / pack protocol.
+
+5. need a way of packing the correct contents <rev-list-args> for the bundle as --all is over-sharing _all_ the local refs (in remotes etc): e.g. --bundle, --clone, --bundle-clone, --clone-bundle (the new option in index-pack)...
+
+6. 'bundle verify' will need to learn the new arrangements. (and also (4) HEAD disambiguation when implemented).
+
+(7). the .pack approach is neat (with respect to placing it in .git/objects/, rather than adjacent to the .bndl.
+
+(8). Junio's explanation of where it's at at the moment.
+
+9. (again) Must not break existing bundle method (ease of getting the bundle's parts)
+
+
+
+
+

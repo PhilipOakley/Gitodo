@@ -1,0 +1,13 @@
+1. core.ignoreStat
+
+2. MSVC-build (contrib),
+
+3. Assume-unchanged extra bits.
+
+4. Guide for "Managing the worktree on your machine" [shallow]/skip-worktree/assume-unchanged.
+
+5. Which commands recover the index?.
+
+6. Git Bundle - symrefs
+
+7. Narrow

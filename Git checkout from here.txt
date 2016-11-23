@@ -1,0 +1,37 @@
+"Updates files in the working tree to match the version in the index or the specified tree. "
+
+Doesn't say how the update is done....
+
+
+
+
+
+git checkout -b|-B <new_branch> [<start point>]
+
+    Specifying -b causes a new branch to be created as if git-branch(1) were called and then checked out. In this case you can use the --track or --no-track options, which will be passed to git branch. As a convenience, --track without -b implies branch creation; see the description of --track below.
+
+    If -B is given, <new_branch> is created if it doesn’t exist; otherwise, it is reset. This is the transactional equivalent of
+
+    $ git branch -f <branch> [<start point>]
+    $ git checkout <branch>
+
+    that is to say, the branch is not reset/created unless "git checkout" is successful.
+--
+
+git checkout -b|-B <new_branch> [<start point>]
+
+    Specifying -b causes a new branch to be created as if git-branch(1) were called and then **the <start point> (or HEAD) will be** //checked out//merged in//. In this case you can use the --track or --no-track options, which will be passed to git branch. As a convenience, --track without -b implies branch creation; see the description of --track below.
+
+** Where the worktree contains existing changes then the <start point> (OR head) will be merged with those changes.
+
+** To create a branch that starts with the current work tree (rather than merging in HEAD), use 'git symbolic-ref`. 
+E.g. git alias branchout(): git branch $1; git symbolic-ref HEAD refs/heads/$1
+`git config --global alias.branchout '!sh -c 'git branch $1; git symbolic-ref HEAD refs/heads/$1'
+`git config --global alias.branchout '!f() {git branch $1; git symbolic-ref HEAD refs/heads/$1};f'
+
+    If -B is given, <new_branch> is created if it doesn’t exist; otherwise, it is reset. This is the transactional equivalent of
+
+    $ git branch -f <branch> [<start point>]
+    $ git checkout <branch>
+
+    that is to say, the branch is not reset/created unless "git checkout" is successful.

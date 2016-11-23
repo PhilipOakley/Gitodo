@@ -1,0 +1,13 @@
+----------
+[Edit]
+
+Additionally, the branch description is added to the `--cover-letter` that is created by `git format-patch`, so that in a patch based development workflow this key statement of requirement/expectation will be automatically included. This fact just came up on the Git developers' mailing [list ][2], though it's not yet documented...
+
+
+----------
+[Edit2]
+
+In addition the branch description is also added to the `git pull-request` (not the same as a Github PR). Again, it's not yet in the pull-request man-page...
+
+  [1]: http://lists.gnu.org/archive/html/savannah-hackers/2009-03/msg00051.html
+  [2]: http://thread.gmane.org/gmane.comp.version-control.git/277600/focus=277644

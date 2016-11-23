@@ -1,0 +1,46 @@
+dead branch trail.
+
+This is an ideal script to support a number of common workflows such as "haphazard", "keeper", "tidy", 
+
+the root commit has no parents, and must have a file within the (git) root directory tree.
+So we need an empty file (named EmptyDeadBranchKeeper ?) (blob from dev/nul -> mktree)
+then commit-tree -m"DeadBranchRoot" > refs/heads/DeadBranches so this one has no parents and one tree.
+
+$(git hash-object -t tree --stdin < /dev/null)
+
+next time the same commit-tree with the first parent is the refs/heads/DeadBranches, and the second parent the $branch, -m"Merge and delete dead branch $branch" > refs/heads/DeadBranches. Then delete $branch.
+
+The linear history of the DeadBranches branch will be :-
+
+Merge and delete dead branch $branch4
+Merge and delete dead branch $branch3
+Merge and delete dead branch $branch2
+Merge and delete dead branch $branch1
+DeadBranchRoot
+
+so we can follow any we like.
+
+1. Is it a valid branch name?
+1a. No - tell user & give usage.
+2. Is it the checked out branch?
+2a. Yes- tell user & give usage.
+3. Does DeadBranches branch exist yet
+3a. Create branch, EmptyDeadBranchKeeper file, tree and commit.
+4. determine head of DeadBranches branch, and it's tree
+4a. create merge commit.
+5. delete old user branch.
+
+
+http://stackoverflow.com/a/17051621/717355
+exists=`git show-ref refs/heads/<branch-name>`
+if [ -n "$exists" ]; then
+    echo 'branch exists!'
+fi
+
+current="git rev-parse --abbrev-ref HEAD"
+
+SYNOPSIS
+git deadbranch [--keep|-k] <branch>
+
+merge <branch>, as second parent, using --ours strategy, onto the (empty worktree) DeadBranches branch. 
+

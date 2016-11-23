@@ -1,0 +1,56 @@
+Build on top workflow; With fetch, not pull, update
+
+The user is working on top of his 'master' branch.
+
+        / -              origin/master
+        ¦
+A - B - C - x - y - z    (local) master  [built upon origin/master]
+         \
+          \
+            D - E - G
+                    ^    (refreshed/fetched from upstream) origin/master
+
+In both cases (with or without a refresh/fetch from upstream), 'git format-patch origin/master' will find commit 'C' as the branch point (aka merge-base), and will create patches for commits x, y, and z.
+
+This is the workflow I think Junio is using as his basis for discussion. (This fits well with the historic methods of working with remotes, which were not as explicit differentiated as they are now)
+
+With this simple [easy] view of that worflow then:
+At some point, when the patchs have been accepted upstream, one must drop one's current (local) master branch and 'git reset --hard origin/master' to become up to date with the upstream.
+
+--
+
+My viewpoint, based on my development on 'pu' style coding would start with this view of the described flow. (Here the starting point is that remotes are viewed as 'separate' from local branches.)
+
+        / -              origin/master when development started, ref no longer valid.
+        ¦
+A - B - C - x - y - z    (local) master  [built upon origin/master]
+ \
+  \
+    B'- C'- D - E - G    (fetched) upstream has rewound/rebased (as per published policy)
+                    ¦
+                    ^    (refreshed) origin/master
+
+Note that here the 'git format-patch origin/master' will find commit 'A' as the branch point (aka merge-base), and produce additional patches for commits B and C as well as the desired x, y & z.
+
+
+In fact my workflow doesn't develop 'on-top', rather uses the 'feature branch' viewpoint, so:
+
+
+        / -              origin/master when development started, ref no longer valid.
+        ¦
+A - B - C                (local) master  [starts at original origin/master]
+¦        \         
+¦         \ x - y - z    (feature branch) 'current'
+ \
+  \
+    B'- C'- D - E - G    upstream has rewound/rebased (as per published policy *note*)
+                    ¦
+                    ^    (refreshed) origin/master
+
+Here the command 'git format-patch origin/master' would be wrong (as above), while 'git format-patch master' would be the desired user action (patches just for x, y & z).
+
+
+
+
+If you go into a resturaunt and ask for 'breakfast' if will the 'their' style, not your style. It's asy to assume everyone has the same breakfast (if at all ;-)
+Breakfast argument (french vs english breakfast content)

@@ -1,0 +1,130 @@
+Git Checkout Case sensitivity
+
+User Deigo j. (saintplay96@gmail.com) reported https://groups.google.com/forum/#!topic/git-users/EryCnwKL4_E that he could create a branch 'name' and then checkout Name sucessuflly but the HEAD and branch commands didn't think he had checked 'it' out (despite the earlier sucess)
+
+This is a probably File system case insensitivity issue.
+
+The test
+========
+
+git init casetest
+cd casetest/
+>temp.txt
+git add -A & git commit -m'first'
+git status
+git branch case
+git branch
+git status
+git checkout Case
+# success!
+git branch
+# note that no branch is marked as current, but neither are we detached head..
+git status
+cat .git/HEAD
+# HEAD records the requested name, not the branch that was actually checked out!
+
+
+Trace
+=====
+
+checkout.c
+#L811 static int switch_branches(c
+#L836 ret = merge_working_tree(opts, &old, new, &writeout_error)
+#L846 update_refs_for_switch(opts, &old, new);
+
+#L613 static void update_refs_for_switch
+#L673 create_symref("HEAD", new->path, msg.buf);
+#L688 fprintf(stderr, _("Switched to branch '%s'\n")   # this is the 'success' message
+
+Summary, the success message is printed after the create_symref for HEAD as part of update_refs_for_switch, which is itself called from switch branches after it has done merge_working_tree. The merge working tree maybe should have noticed that what it asked for, wasn't what it got.
+
+now to delve into the merge_working_tree and the 'new' struct and msg.buf
+
+checkout.c
+#L471 static int merge_working_tree
+
+**** This merge_working_tree looks to be it (where the problem is hidden)!
+
+
+
+in
+#L1105 static int parse_branchname_arg(
+#L1225 new->name = arg;
+
+
+in static void update_refs_for_switch(  #L613
+#L641 create_branch(old->name, opts->new_branch, new->name,
+#L647 new->name = opts->new_branch;
+
+meanwhile
+#L672 	} else if (new->path) {	/* Switch branches. */
+
+
+==
+from the top of cmd_checkout #L1338
+we find
+#L1452 int n = parse_branchname_arg(  (is this getting the name??)
+
+defined at #L1105 parse_branchname_arg()
+we find
+#L1118 if (get_sha1_mb(arg, rev)) _mb: merge base i.e. A...B syntax, the if must be saying it wasn't that..
+
+after the get_sha1_mb() we, either way, do the 
+
+but before, at #L1192 check_filename(
+
+#L1225
+	new->name = arg;
+	setup_branch_path(new);
+
+
+
+trace eventually to (in refs.c #L1603)
+	stat_ref:
+	if (bad_name) {
+
+
+#L1338 int cmd_checkout(i
+contains at the end..
+#L1498 return checkout_branch(&opts, &new);
+
+so inside (see above) 
+
+
+
+
+Windows methods of getting true file name
+http://stackoverflow.com/questions/4763117/how-can-i-obtain-the-case-sensitive-path-on-windows/4763137#4763137
+http://stackoverflow.com/questions/478826/c-sharp-filepath-recasing/479198#479198
+http://stackoverflow.com/questions/74451/getting-actual-file-name-with-proper-casing-on-windows
+
+
+Need to look at the alternates such as the git status, git branch etc which actually look at the ref and the HEAD.
+
+
+=========================================
+>#L1338 int cmd_checkout()    git\builtin\checkout.c
+|#L1433 * Extract branch name from command line arguments
+|#L1452 int n = parse_branchname_arg(  (is this getting the name??)
+ > #L1105 parse_branchname_arg()    git\builtin\checkout.c
+ |  #L1181 if (get_sha1_mb(arg, rev)) _note _mb: merge base i.e. A...B syntax, the if must be saying it wasn't that..
+ |  #L1192 check_filename(
+ |  #L1225 new->name = arg;
+ |  #L1226 setup_branch_path(new);
+  >  #L460 setup_branch_path()
+  |  #L464 strbuf_branchname
+   >  #L1166 strbuf_branchname()    git\sha1_name.c
+   |  #L1169 int used = interpret_branch_name
+    >  #L1126 interpret_branch_name()
+    |  #L1130 int len = interpret_nth_prior_checkout     Parse @{-N} syntax
+    |  #L1152 len = interpret_branch_mark  
+     >  #L1072  interpret_branch_mark()
+     |  #L1092  branch = branch_get(name_str);
+      >  #L1681  branch_get();
+      |  #L1689  ret = make_branch(name, 0);
+   adds "refs/heads/" prefix to new->path
+   | trace eventually to (in refs.c #L1603)
+	stat_ref:
+	if (bad_name) {
+|at the end of cmd_checkout
+|#L1498 return checkout_branch(&opts, &new);

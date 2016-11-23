@@ -1,0 +1,19 @@
+http://thread.gmane.org/gmane.comp.version-control.git/183464
+
+From: arQon <arqon <at> gmx.com>
+Subject: [BUG] git checkout <branch> allowed with uncommitted changes
+Newsgroups: gmane.comp.version-control.git
+Date: 2011-10-13 08:40:40 GM
+
+
+* jc/verbose-checkout (2011-10-16) 2 commits
+ - checkout -v: give full status output after switching branches
+ - checkout: move the local changes report to the end
+
+This is just to leave a record that the reason why we do not do this not
+because we are incapable of coding this, but because it is not a good idea
+to do this. I suspect people who are new to git that might think they need
+it would soon realize the don't.
+
+Will keep in 'pu' as a showcase for a while and then will drop.
+

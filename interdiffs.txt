@@ -1,0 +1,6 @@
+try interdiffs in a cover letter?
+
+(I do git diff HEAD...$(previousSeries) with previousSerier either
+local branch or rather what Junio picked up already. There is also tbdiff,
+which should be better and easier than this work flow)
+

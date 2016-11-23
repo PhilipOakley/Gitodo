@@ -1,0 +1,33 @@
+Git doc: GPL2 does not apply to repo data
+
+Some potential commercial users may be put off by the FUD
+(Fear, Uncertainty and Doubt) that has been raised in the past
+regarding the use of FOSS software.
+
+In such communities, even the legal advice may be misinformed
+and over-cautious regarding the storage of code and other
+intellectual property in a Git repository for fear that Git's
+GPL2 licence may somehow 'infect' the respository.
+
+Add simple statements highlighting Git's licence, it's use
+for Linux, to imply industrial-strength, and that users should
+apply a suitable licence of their choice because the Git GPL
+licence does not apply to their repo data.
+
+It should be noted that a 'git init' will create a repo that while
+empty of user data does provide the .git directory structure includes
+a number of template files ('hooks\pre-rebase.sample' is explicitly
+copyright), default refs and config file. Some may suggest that these
+carry the GPL2 to the repo.
+
+The GPL2 will still apply to the hook templates and the other
+template files, but these, even if modified (becoming derived works)
+would be distributed with the repo, satisfying the GPL.
+
+The new content copyright belongs to user. Request that they state
+their licence terms in line with recent FOSS industry practice.
+
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
+---
+https://help.github.com/articles/open-source-licensing/ 
+

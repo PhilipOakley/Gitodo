@@ -1,0 +1,136 @@
+merging-rebase.sh (August 2013) stripped down.
+# https://raw.github.com/msysgit/msysgit/b656c14ce48119d303be3d368b6af0ad59a3a0c1/share/msysGit/merging-rebase.sh
+# Usage: $0 [options] [<upstream>]
+
+# Options:
+# -s|--show	show which commits would be cherry-picked
+# -g|--graph	like --show, but with the commit graph
+# -c|--cherry	try to leave out commits that were applied upstream
+
+TO=${1:-junio/next} # TO is the first ("1") remaining parameter (i.e. <upstream>), or it's "junio/next" (a colon-dash conditional asignment)
+
+HEAD_NAME="$(git rev-parse --symbolic-full-name HEAD)"
+UPSTREAM=$(git rev-parse --symbolic-full-name HEAD@{u})
+# check tracking remote branch, and Your '$HEAD_NAME' is up-to-date.
+
+FROM_SHA1=$(git rev-parse --short HEAD)
+TO_SHA1=$(git rev-parse --short $TO)
+
+# Find old merging rebase, if any
+list_merges $TO..
+is_ours_merge $commit
+"$subject" is *merging-rebase*
+check "Is this the latest merging rebase?" 
+REBASING_BASE=$commit
+
+# 
+BASE_MESSAGE="using $REBASING_BASE as base."
+RANGE=$REBASING_BASE..
+
+# dryrun: git log --oneline $graph $cherry --boundary $RANGE
+
+# build $TODO_EXTRA.msg
+
+#build the (merging-)rebase script that is prepended to the interactive rebase todo list
+# note the two exec commands that will start the rebase.
+# it is equivalent to the non-existent 'merge -s theirs' strategy. (see http://marc.info/?l=git&m=121637513604413&w=2)
+# the ours/theirs strategy cannot fail (i.e. cannot have any merge conflicts).
+cat > "$TODO_EXTRA" <<-EOF
+	# Start the merging rebase:
+	# Reset to $TO and ...
+	exec git reset --hard $TO
+	# ... fake-merge current $HEAD_NAME
+	exec git merge -s ours -m "\$(cat "$TODO_EXTRA.msg")" $FROM_SHA1
+	
+	# Patches to rebase:
+EOF
+
+# create the interactive editor that checks it is editing the rebase todo list and then prepends the script. 
+cat > "$TMP_EDITOR" <<-EOF &&
+	#!/bin/sh
+	case "\$1" in
+	*/git-rebase-todo)
+		# prepend the initialising commands
+		cat "\$1" >> "$TODO_EXTRA" &&
+		mv "$TODO_EXTRA" "\$1"
+	esac &&
+	# now use the normal editor - yes 'git var' is a real command. 
+	exec "$(git var GIT_EDITOR)" "\$@"
+EOF
+
+
+# Rebase!
+GIT_EDITOR="$TMP_EDITOR" git rebase --autosquash -i ${REBASING_BASE:-$TO}
+
+# So finally, we get rebase to list the sequence, use our fake editor to sneak in the 'reset' and 'ours merge', then let the user tweak the sequence with the normal editor and run the rebase. 
+
+---
+Hi Philip,
+
+On Sun, 4 Aug 2013, Philip Oakley wrote:
+
+> Is there a DAG diagram (e.g. ASCII art, etc.) that illustrates the flow
+> of the new merging rebase [...]
+
+Upper-case letters designate upstream ("Git") commits, lower-case ones
+downstream ("Git for Windows") commits, in the following diagram.
+
+Before merging rebase:
+
+        C - D - ... - E
+      /
+A - B - p - c - ... - d
+      /
+a - b
+
+where p is the previous merging rebase, i.e. c ... d *used* to be a
+clean patch series on top of B (whose working tree is identical to p's).
+
+The merging rebase makes a fake merge m of the downstream history leading up
+to d on top of E with the '-s ours' option so that the working tree of m
+is identical with E's, but m's commit history includes the complete
+downstream history (for the moment undoing all downstream changes):
+
+        C - D - ... - E - m - c' - ... d'
+      /                 /
+A - B - p - c - ... - d
+      /
+a - b
+
+The c' ... d' commits are the rebased downstream commits c ... d.
+
+The reason for this scheme is that we want a clear picture of our
+downstream changes (c' ... d') but also a fast-forward (thanks to m).
+
+That way, rebases of topic branches started before m will rebase nicely to
+the new d'. That way, people wanting to follow the Git for Windows
+development can still follow it without having to remember to put a
+--rebase with their pull, and a fetch & merge workflow also works. That
+way, you can see exactly when commits were developed originally and how
+they progressed over time.
+
+Ciao,
+Dscho
+
+As parallel branches:
+
+A - B - C - D - ... - E          <- Junio/Git
+      \                 \
+a - b - p - c - ... - d - m - c' - ... d'     <- Msysgit
+
+(merges have first parent link to Junio/Git)
+
+Future uspstream development continues:
+
+A - B - C - D - ... - E - FutureUpstream - H .   <- Junio/Git
+      \                 \                   \
+a - b - p - c - ... - d - m - c' - ... d' -  n - c''..d''  <- Msysgit
+
+or with local extra commits:
+
+A - B - C - D - ... - E - FutureUpstream - H ..   <- Junio/Git
+      \                 \                   \
+a - b - p - c - ... - d - m - c'...d' - e -  n - c''..d''..e'   <- Msysgit
+
+p=previous, m=merge, n=next_merge
+Ensures ff,  avoids disconnected rebase, maintains link(s) to upstream.

@@ -1,0 +1,37 @@
+Git TODO
+
+Handle mistranslations /a/ ask ubuntu what they do, /b/ document.
+
+define pseudorefs in glossary, based on Turner's comments "09 july 15 22.53; patch v7 2/8 cherry-pick: treat ..."
+
+update doc clone/int to state which creates an extra directory and which doesn't.
+
+add 'git help --pdf' (same as --web/html, but passes the .pdf path to the browser), Git itself doesn't provide the pdf's it's the user/user's admin/distribution's task to create them.
+
+update gitk to highlight changed mode bits if the corefilemode is false (i.e. they can't be trusted) the git gui can easily change them if the user unstage/stages some file to aggregate changes and the 'false modes' are picked up.
+
+Also git Gui to notice (and allow mode change if core.trustfilemode.false.
+
+Add wiki page about the 'root' drive and changing CAcerts depending on start point for the particular Git (especially if you have an SDK version).
+
+Doc/update the git rebase messages to say "add/commit resolved issues!" (git-rebase-conflicts-keep-blocking-progress.txt)
+
+
+
+Make git Bundle include the refs for pseudo refs (after a null) so that the heuristic for guessing which branch is current HEAD gets better.
+
+
+split the install/build/deploy steps in the git/Makefile so that "we" can deploy the MSVC-VS08/10/12 compiled code.
+
+
+Sparse/Narrow clone/checkout, with enhanced ignore patterns. Also Junio's 07 July 2015 18.03 "Re: Whether Git supports directory level access or not"!
+
+create/compile msmtp.exe for the new SDK.
+Can't exec "/bin/msmtp.exe": No such file or directory at C:\git-sdk-32\mingw32/libexec/git-core\git-send-email line 1258.
+
+doc 'git.pathspec --help' -- why isn't glossary good enough
+
+Improve "run-length / clock skew options" (multi-point on curve) (e.g. those who have the wrong year!), so allow a run of (upto) N commits all with very old time stamps as long as they are within say 24hrs/1hr of each other , so a series with wrong clock is accepted, as long as the ones after (DAG earlier) are still within date. 
+
+
+Check that ther is a 'Timecut' (rather than merge points etc) option for Git Shallow. (see also clock skew)

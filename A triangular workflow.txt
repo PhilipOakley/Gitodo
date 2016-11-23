@@ -1,0 +1,16 @@
+A triangular workflow is required when the upstream repository is read only, uses a pull request workflow, and your development repository is not accessible by the upstream maintainer. In this case you will need a fork of your repository to publish your contributions that is accessible by the upstream.
+
+The options for creation of the publish fork will depend on the available hosting options. If the upstream is hosted  on a service that allows direct forking then this can be the simplest method.
+
+
+"Mexican standoff"
+
+In this arrangement there is no 'origin' repository, rather it's 'upstream', 'publish(me)' and 'local'.
+
+
+The question is : What is the default fetch/pull remote and refspec.
+
+Git.git doesn't use triangular anyway.
+
+
+possibility for confusion with 'fork as backup' and 'fork as open source (passive publishing)' (c.f. a PR is active publishing)

@@ -1,0 +1,11 @@
+
+When creating the new oid length we can create enough space for an alternate oldoid and fixed flag that is long enough not to have much of a collision attack.
+
+|------newoid--------|-type-|
+|----flag----|---oldoid-----|
+
+
+Fixed flag for the oldoid suffix.
+
+The key point for now is the possibility that we can experiment with md5 and sha1 as the pair using the current sha1 sizing!
+

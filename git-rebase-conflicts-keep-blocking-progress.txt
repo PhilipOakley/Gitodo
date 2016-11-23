@@ -1,0 +1,10 @@
+
+http://stackoverflow.com/questions/4033009/git-rebase-conflicts-keep-blocking-progress
+
+I think you (like me) have misinterpreted @unutbu's advice: 
+1) first you run git rebase master and let it fail; 
+2) then you edit version.txt and make it as it should look at that point, and save the edit; 
+3) then you git add .../version.txt; <<<<< Add;Add;Add !!!
+4) then you do git rebase --continue (**not** 'commit')! 
+If rebase --continue succeeds here, it is already committed (no need for git commit here!) - so all that is left to do is git push (if you use a remote repo). 
+Hope this helps, if I got it right :) - cheers! 

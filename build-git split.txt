@@ -1,0 +1,8 @@
+
+build-git	deploy-git	install-git
+build-html	deploy-html	install-html
+build-gittools	deploy-gittools	install-gittools
+
+three x three way split for the make file so that the msvc-build
+ (and VS2008 compile) can fit in instead of of build-git step,
+ yet retain the other parts.

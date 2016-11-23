@@ -1,0 +1,39 @@
+http://stackoverflow.com/a/18668988/717355
+
+Log back to branch forks
+
+here's no shorthand for "find any point where history rejoins", so you have to use something like what Cupcake and D4NI3LS suggested: explicitly stop logging at-or-before such a point.
+
+There is, however, a way to automate this. It can be encapsulated in a "one line" shell script:
+
+git log HEAD --not $(
+    git for-each-ref --format='%(refname:short)' refs/heads/ |
+    grep -v "^$(git symbolic-ref -q --short HEAD)$"
+) "$@"
+How this works:
+
+The innermost bit, git symbolic-ref -q --short HEAD, prints the current branch name, or nothing at all if you are not on a branch ("detached HEAD" state).
+
+We turn this into a grep pattern by adding ^ (anchor at start-of-line) and $ (anchor at end).
+
+We use that to remove the current branch (if any) from git for-each-ref output.
+
+The for-each-ref output is the short refname for every branch, i.e., every ref in refs/heads/. Thus, if your complete set of branch names are, for instance, monty, python, flying, and circus and you're on branch flying, this lists monty, python, and circus.
+
+Finally, we give all of this to --not, after asking git log to start at HEAD. The log command uses git rev-list to start from wherever you ask it, and keep going backwards until something (in this case, the --not list) makes it stop. And of course we add "$@" so that any other command-line arguments are included.
+
+Since it's a one liner, it can be embedded in ~/.gitconfig, as an alias:
+
+[alias]
+        ltf = !git log HEAD --not $(git for-each-ref \
+                --format='%(refname:short)' refs/heads | \
+                grep -v "^$(git symbolic-ref -q --short HEAD)$") "$@" -- 
+
+and now git ltf, git ltf --oneline, etc., all do the trick. (I don't know if I like the name ltf, it stands for "log to fork" but this is more of a "log to join". Maybe lbr for "log branch"?)
+
+"logforks"??
+
+need terminating ' --' or you get 
+fatal: ambiguous argument 'Documentation': both revision and filename
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'

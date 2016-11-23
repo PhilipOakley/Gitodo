@@ -1,0 +1,15 @@
+file:///C:/git-sdk-32/mingw32/share/doc/git-doc/git-show-branch.html
+
+sort out the "{apostrophe}" (2 places) that shouldn't be there.
+
+sort out (make clear it's 'default') the definition of the default or all refs under refs/heads and/or refs/tags.
+
+add example with merge commits (multiple + + + on a line, but only one branch named) and explain.
+
+Correct the code to avoid above confusion (and maybe add '|' lines to de-confuse the +++ problem).
+
+May depend on whether the old branches have been deleted.
+
+Point to newer better log methods.
+
+P.

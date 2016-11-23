@@ -1,0 +1,47 @@
+6750f62 doc: fix the 'revert a faulty merge' ASCII art tab spacing
+5dd05eb doc: fix merge-base ASCII art tab spacing
+a117be4 doc: revisions: sort examples and fix alignment of the unchanged
+7a5370e doc: revisions: show revision expansion in examples
+1afe13b doc: revisions - clarify reachability examples
+0b45124 doc: revisions - define `reachable`
+8cf5739 doc: gitrevisions - clarify 'latter case' is revision walk
+6cb4f78 doc: gitrevisions - use 'reachable' in page description
+39b4d85 doc: revisions: single vs multi-parent notation comparison
+59841a3 doc: revisions: extra clarification of <rev>^! notation effects
+391a3c7 doc: revisions: give headings for the two and three dot notations
+c6eff44 doc: show the actual left, right, and boundary marks
+b3d3ea0 doc: revisions - name the left and right sides
+27ac837 doc: use 'symmetric difference' consistently
+09667d0 git-p4: correct hasBranchPrefix verbose output
+561d2b7 doc: show usage of branch description
+a6926b8 po/README: Update directions for l10n contributors
+92be938 doc: core.ignoreStat update, and clarify the --assume-unchanged effect
+1be976e doc: core.ignoreStat clarify the --assume-unchanged effect
+ccadb25 doc: make clear --assume-unchanged's user contract
+7c45cee doc: fix 'git status --help' character quoting
+673151a doc: add 'everyday' to 'git help'
+5a568ea doc: Makefile regularise OBSOLETE_HTML list building
+992cb20 doc: modernise everyday.txt wording and format in man page style
+0ae0e88 doc: give some guidelines for error messages
+08f8d5d doc/cli: make "dot repository" an independent bullet point
+e49c8f3 remote set-head -h: add long options to synopsis
+159543e remote doc: document long forms of set-head options
+b85ecea config doc: update dot-repository notes
+431260c doc: command line interface (cli) dot-repository dwimmery
+9074925 Doc: 'replace' merge and non-merge commits
+a133737 doc: include --guide option description for "git help"
+73903d0 help: mention -a and -g option, and 'git help <concept>' usage.
+002b726 builtin/help.c: add list_common_guides_help() function
+65f9835 builtin/help.c: add --guide option
+15f7d49 builtin/help.c: split "-a" processing into two
+d84cef1 Doc User-Manual: Patch cover letter, three dashes, and --notes
+6454d9f Doc format-patch: clarify --notes use case
+11fbe18 Doc repository-layout: Show refs/replace
+e39b307 Doc notes: Include the format-patch --notes option
+76323c6 Doc SubmittingPatches: Mention --notes option after "cover letter"
+f0970fa Doc branch: show -vv option and alternative
+068c674 Doc clean: add See Also link
+a73d379 Doc add: link gitignore
+3f8c5a4 Doc: separate gitignore pattern sources
+bc40dea Doc: shallow clone deepens _to_ new depth
+01f7d7f Doc: Improve shallow depth wording

@@ -1,0 +1,2 @@
+Gitk needs to be able to show which repo (path) its showing, and what is currently checked out (i.e. branch/tag/sha1)
+

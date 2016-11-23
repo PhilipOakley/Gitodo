@@ -1,0 +1,12 @@
+GSoC Ideas.
+
+shallow-date clones :: use unix-time as parameter on wire, but big integer, signed, so that it's extensible. Include date hysteresis (clock-skew) flexibility for both run length [5] and delta date [1 day] (with sensible defaults). 
+
+Narrow/sparse repos (and packs) ::
+ allows specific 'sparse objects' e.g. "gitsparseblob <sha1>", and "gitsparsetree <sha1>" (or gitnarrowblob/tree), but retaining its original object name. [has same existance theorem as submodules: It's this <sha1>, you'll find it's true content somewhere else]. 
+
+Decide on the 'ignore-format' for size, type, age(perhasps tag relative], path details of those that are sparse (beyond current path-only basis)
+A: make local repo and fsck and worktree cope
+B: how to extend packs to include such objects
+C: capability advertisement from remote (and local), and it's multi-way choice/force.
+ 

@@ -1,0 +1,30 @@
+refspec
+=======
+
+should (maybe) be included in 'specifying revisions' gitrevisions.txt,
+
+but it's hidden in pull-fetch-param.txt which is embedded in:
+ git-fetch and
+ git-pull 
+
+While refspec is mentioned in many other places as well
+
+config.txt
+fetch-options.txt
+git-check-ref-format
+git-checkout
+git-clone
+git-cvsserver
+git-push
+git-remote
+git-show-branch
+git-svn
+gitremote-helpers (maybe renamed in newer versions, 'cos of the missing hyphen)
+glossary-contents.txt
+pull-fetch-param.txt
+urls-remotes.txt
+user-manual.txt
+
+(plus the two at the top)
+
+

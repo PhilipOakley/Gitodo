@@ -1,0 +1,5 @@
+Add a --pdf option to git help such that the help schema will launch the web browser and then send it the <helpfile>.<pdf>
+
+Leave the making of those helpfile.<pdf> to the user / others rather than Junio.
+
+see 20March2015 emails.

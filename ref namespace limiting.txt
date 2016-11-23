@@ -1,0 +1,8 @@
+filtering refs (negative patterns)
+allow parts of ref space to be excluded
+
+http://thread.gmane.org/gmane.comp.version-control.git/283350/focus=284769
+
+I'd want to limit blob expansion of refs to one level so that sub-level namesppaces are not included unless explicitly asked.
+
+e.g refs/heads/*^ means that refs/heads/master is found but refs/heads/jh/master is not because its in the /jh/ namespace.
