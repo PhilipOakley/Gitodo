@@ -1,0 +1,8 @@
+Both bundle and clone (and the pack protocol) currently lack a method of indicating which branchname is currently HEAD.
+
+The pack protocol lists HEAD first, so we can add it's name after the null. Curren(old) git will ignore this.
+
+The bundle can be refreshed/refactored to sort the heads list, as per modern pack processing. Then add the same method of adding HEAD's name.
+
+
+Finally, for the actual ref name that is HEAD we add 'HEAD' behind the null.
