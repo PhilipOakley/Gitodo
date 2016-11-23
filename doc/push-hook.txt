@@ -1,0 +1,8 @@
+If there is nothing to push, the hook will still run, but the input line will be empty.
+
+Likewise the hook will still run for other case such as:
+- the remote ref is already up to date, or
+- pushing to the remote ref cannot be handled by a simple fast-forward.
+
+
+Hooks, when enabled, are executed unconditionally by their calling functions. Script writers should ensure they handle all conditions.

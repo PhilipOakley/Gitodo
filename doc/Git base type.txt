@@ -1,0 +1,17 @@
+For the Glossary under "base"
+
+rebase
+merge base
+bundle - bases basis
+
+delta-base
+base objects
+
+diff --base
+
+--base-path
+url.<base>.
+
+database
+codebase
+line-based

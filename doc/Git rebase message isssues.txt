@@ -1,0 +1,26 @@
+Git rebase message isssues:
+1. when get to 'an allow empty', doesn't cover the 'git rebase --continue' step (?)
+
+Philip@PHILIPOAKLEY /c/msysgit195/git (msvc-build-fix-rebased)
+$ git rebase -i --onto master v1.9.5.msysgit.0
+rebase in progress; onto 7f4ba4b
+You are currently rebasing branch 'msvc-build-fix-rebased' on '7f4ba4b'.
+
+Untracked files:
+        _UpgradeReport_Files/
+        libgit/
+        vcs-svn_lib/
+        xdiff_lib/
+
+nothing added to commit but untracked files present
+The previous cherry-pick is now empty, possibly due to conflict resolution.
+If you wish to commit it anyway, use:
+
+    git commit --allow-empty
+
+Otherwise, please use 'git reset'
+Could not apply 587d9e27cf41f4284609874dc78e89c9dcc378e6... test-hashmap: ignore msvc generated dire
+ctory
+=========================================================
+
+when get to the conficts, doesn't cover the git add/commit step. (it just says 'fix it' whatever that maybe. If you've been stung you are always fearful...

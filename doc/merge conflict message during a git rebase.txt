@@ -1,0 +1,14 @@
+typical merge conflict message during a 'git rebase -i'
+====
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase --abort".
+Could not apply e91f160... copy everyday.txt to giteveryday.txt
+====
+
+1. "resolve" includes the 'git add' but not the 'git commit' (the latter is done by continue)
+2. clarify whether --skip will remove merge conflicts or do they get left.
+
+Also update the docs to clarify (using a common style, rather than shifting style)
+see http://stackoverflow.com/questions/4033009/git-rebase-conflicts-keep-blocking-progress
+http://stackoverflow.com/questions/161813/how-do-i-fix-merge-conflicts-in-git
