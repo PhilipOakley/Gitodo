@@ -1,0 +1,76 @@
+Git Narrow
+
+Git Narrow provides a mechanism for operating on
+only a partial clone of a repo in the same manner as
+using a sub-module is selective.
+
+However a narrow clone allows the user to vary that selection
+on a day by day, hour bu hour basis, without compromising
+integrity of the overall repo. Ultimately there still needs
+to be a repo within the web of trust that is complete.
+
+A normal use case would be to clone an upstream repo but exclude
+any blobs that are greater than some set size, or to exclude some
+specific sub-tree that was not required or was quarantined.
+
+The base proposal is that the users repo would contain a flag indicating
+if it would allow it self to be 'narrow' such that git fsck and the tree/blob navigation would not be suprised by missing, but marked, tree/blob objects.
+
+Missing tree/blob objects are indicated by a git file with content :
+	"gitnarrow tree: <sha1>"
+Such a git file is stored in the object store, self referentially, under
+its own <sha1> name. 
+
+Note that the use of a self reference to an extrenal
+<sha1> is the same generic mechanism as used by sub-modules, which have
+no problems as long as users have pushed their sub-module <sha1> _somewhere_.
+
+The presence of the marked <sha1> tree/blob allows on-going commits to be generated that use and refer to that same (un-changed) object without needing it to be present. 
+
+Such a non-present object can obviously also be 'deleted' from the work tree by excluding that <sha1> from the next commit. The narrow object itself would still be withing the object store.
+
+
+Server side.
+
+At the upstream/(self-)publish server within the web of trust there needs to be additional configuration to indicate if the server itself will allow its repo to be narrow or remain full width. 
+
+It would be normal for the ustream server to be full-width (wide sense trust worthy). While a users self-publish server would want to accept the user's narrowness. Thus an upstream server would expect completeness of pack transfers on a thin basis, object by object, (as opposed to comit by commit basis).  While the self publish server would allow itself to be narrow, and even become narrower.
+
+Flagging Narrowness
+===================
+Flagging the level of narrowness required:
+1. direct on the request - the user asked to limit narrowness by (a) size;
+ or (b) narrowness by path
+ or (c) by number of directory levels
+  or (d) full width recovery (special case of widening).
+2. stored in a .gitnarrow config file (with consequent <sha1> ref) that can be told to the server about to send the narrow pack. 
+Note that a file/blob may have been referenced by either its path or size.
+
+An index/ worktree check can re-create the .gitnarrow file as a list of path references to be excluded. (can use same format as .gitignore, but no negatives; wild cards only on input, not when auto-generated)
+
+
+Server Capability
+=================
+:serve-narrow
+:accept-narrow
+
+
+
+Narrow Trees
+============
+Still need a 'keep file' for the folder/directory. Here its ".gitnarrowtree"
+
+for the tree object itself it may be easier to use the git-tree format (i.e.
+100644 blob b864df623e3b89ad678a888dce4b0d4c997f1ac3    sha1.h
+), instead with 
+000000 tree <sha1> .gitnarrowtree
+As the tree flag object. Where that exact pattern is the key, with the repeated <sha1> as the disambiguation for attempts at name/permissions conflict.
+
+
+Also server config for when the narrow clone asks to widen, and whether to refuse if if idn't wide enough, or simply supply a thinner pack than desired. Note that if a full width is requested and the server can't provide that it must about with error.
+
+
+INDEX
+=====
+
+Missing blobs are flagged as simply --assume unchanged.
