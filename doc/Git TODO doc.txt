@@ -1,0 +1,13 @@
+Git TODO
+
+Handle mistranslations /a/ ask ubuntu what they do, /b/ document.
+
+define pseudorefs in glossary, based on Turner's comments "09 july 15 22.53; patch v7 2/8 cherry-pick: treat ..."
+
+update doc clone/int to state which creates an extra directory and which doesn't.
+
+Add wiki page about the 'root' drive and changing CAcerts depending on start point for the particular Git (especially if you have an SDK version).
+
+
+doc 'git.pathspec --help' -- why isn't glossary good enough
+
