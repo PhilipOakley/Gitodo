@@ -1,0 +1,41 @@
+When a <commit> can be given in a command we can use any/many of the ways of specifying a revision, e.g. the :/<msg> method
+and various others that have the <sha1>.
+
+This came up with the --fixup= commit command which creates a 'fixup! <msg>' for the target.
+
+and then there is -m"<msg>" method and then the -autosquash effect in the rebase (layers on layers)
+
+The main point is to sprinkle around the docs the examples that use these alternate methods of speciying the commit.
+
+
+
+search for documenation that has <commit> in the description.
+
+search fro doc that link to "gitrevisions" (i.e. how to specify them)
+
+reset
+commit
+stash
+rebase
+revert
+merge
+tag
+checkout
+branch
+bisect
+cherry-pick
+diff
+diff-tree
+difftool
+format-patch
+http-fetch
+merge-base
+p4
+replace
+verify-commit
+rev-list
+rev-list-options
+log
+rev-list
+git
+gitk
