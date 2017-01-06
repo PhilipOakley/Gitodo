@@ -1,0 +1,3 @@
+The gitk has a keybindings list - add one to the gui
+
+ctrl T, U, I
