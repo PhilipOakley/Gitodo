@@ -1,0 +1,17 @@
+gitview was removed
+https://public-inbox.org/git/20161228172837.24395-1-sbeller@google.com/
+Subject: [PATCH] contrib: remove gitview
+Date: Wed, 28 Dec 2016 09:28:37 -0800
+
+reply:
+https://public-inbox.org/git/8760lyc62u.fsf@linux.vnet.ibm.com/
+
+git send-email \
+    --in-reply-to=8760lyc62u.fsf@linux.vnet.ibm.com \
+    --to=aneesh.kumar@linux.vnet.ibm.com \
+    --cc=aneesh.kumar@gmail.com \
+    --cc=git@vger.kernel.org \
+    --cc=jvoss@altsci.com \
+    --cc=peff@peff.net \
+    --cc=sbeller@google.com \
+    /path/to/YOUR_REPLY
