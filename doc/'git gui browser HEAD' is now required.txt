@@ -1,0 +1,28 @@
+Git gui man page says that
+'git gui browser'
+should default to assuming HEAD as the specified commit.
+
+commit 37cd4f7e820da82e5731c06b7ebf83963d796e5e
+Author:	Shawn O. Pearce <spearce@spearce.org>  Thu Jun 21 05:51:00 2007
+Committer:	Junio C Hamano <gitster@pobox.com>  Sat Jun 23 06:32:32 2007
+
+added the documentation.
+
+
+
+commit c52c94524bdf9bbe515137b7f3f0240bc10a7f63
+Author:	Shawn O. Pearce <spearce@spearce.org>  Wed Jul 18 04:58:56 2007
+Committer:	Shawn O. Pearce <spearce@spearce.org>  Wed Jul 18 04:58:56 2007
+
+git-gui: Allow blame/browser subcommands on bare repositories
+
+changed the command processing to make this assumption untrue.
+
+'git gui browser HEAD' is now required.
+
+
+noticed Xmas 2016 (while considering how to extend the gui/gitk docs to include pictures..)
+
+git-gui.sh#L3040-3050
+
+it maybe that in the "browser" switch needs an extra bit of code to insert the HEAD, just maybe the 'default' should be removed from the docs.
